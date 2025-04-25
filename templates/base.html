@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Restaurant{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .hero-section {
+            background-color: #f8f9fa;
+            padding: 80px 0;
+        }
+        
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .menu-item-card {
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .menu-item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background-color: #ff6b6b;
+            border-color: #ff6b6b;
+        }
+        
+        .btn-primary:hover {
+            background-color: #ff5252;
+            border-color: #ff5252;
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home:index' %}">Tasty Restaurant</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home:index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if '/menu/' in request.path %}active{% endif %}" href="{% url 'home:menu' %}">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if '/about/' in request.path %}active{% endif %}" href="{% url 'home:about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if '/contact/' in request.path %}active{% endif %}" href="{% url 'home:contact' %}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if '/reservation/' in request.path %}active{% endif %}" href="{% url 'home:reservation' %}">Reservation</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/user/cart/' in request.path %}active{% endif %}" href="{% url 'user:cart' %}">
+                                <i class="fas fa-shopping-cart"></i> Cart
+                                {% if request.session.cart %}
+                                    <span class="badge bg-danger">{{ request.session.cart|length }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{% url 'user:dashboard' %}">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="{% url 'user:profile' %}">Profile</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'user:logout' %}">Logout</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/user/login/' in request.path %}active{% endif %}" href="{% url 'user:login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/user/register/' in request.path %}active{% endif %}" href="{% url 'user:register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Messages -->
+    {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <!-- Main Content -->
+    {% block content %}{% endblock %}
+    
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Tasty Restaurant</h5>
+                    <p>We serve the best food in town with the finest ingredients and experienced chefs.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact</h5>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i> 123 Main Street, City<br>
+                        <i class="fas fa-phone"></i> +123 456 7890<br>
+                        <i class="fas fa-envelope"></i> info@restaurant.com
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Follow Us</h5>
+                    <div class="d-flex">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4 border-light">
+            <div class="text-center">
+                <p>&copy; 2025 Tasty Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Tasty Restaurant{% endblock %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <h1 class="mb-4">Your Dashboard</h1>
+            
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3 mb-4">
+                    <div class="list-group">
+                        <a href="{% url 'user:dashboard' %}" class="list-group-item list-group-item-action active">Dashboard</a>
+                        <a href="{% url 'user:profile' %}" class="list-group-item list-group-item-action">Profile</a>
+                        <a href="{% url 'user:cart' %}" class="list-group-item list-group-item-action">
+                            Cart
+                            {% if request.session.cart %}
+                                <span class="badge bg-primary float-end">{{ request.session.cart|length }}</span>
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="m-0">Your Orders</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if orders %}
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Order #</th>
+                                                <th>Date</th>
+                                                <th>Total</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for order in orders %}
+                                                <tr>
+                                                    <td>{{ order.id }}</td>
+                                                    <td>{{ order.created_at|date:"M d, Y" }}</td>
+                                                    <td>${{ order.total_amount }}</td>
+                                                    <td>
+                                                        <span class="badge {% if order.status == 'completed' %}bg-success{% elif order.status == 'processing' %}bg-primary{% elif order.status == 'cancelled' %}bg-danger{% else %}bg-warning{% endif %}">
+                                                            {{ order.status|title }}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{% url 'user:order_detail' order.id %}" class="btn btn-sm btn-outline-primary">View</a>
+                                                        {% if order.invoice %}
+                                                            <a href="{% url 'user:download_invoice' order.invoice.id %}" class="btn btn-sm btn-primary">Invoice</a>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <div class="text-center py-4">
+                                    <p>You haven't placed any orders yet.</p>
+                                    <a href="{% url 'home:menu' %}" class="btn btn-primary">Browse Menu</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

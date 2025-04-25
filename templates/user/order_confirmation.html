@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Confirmation - Tasty Restaurant{% endblock %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="m-0">Order Confirmed!</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <i class="fas fa-check-circle fa-5x text-success mb-3"></i>
+                            <h3>Thank You for Your Order</h3>
+                            <p class="lead">Your order has been placed successfully.</p>
+                            
+                            <div class="alert alert-info mt-4">
+                                <h5>Order #{{ order.id }}</h5>
+                                <p>
+                                    Date: {{ order.created_at|date:"F d, Y" }}<br>
+                                    Total: ${{ order.total_amount }}
+                                </p>
+                            </div>
+                            
+                            <p>A confirmation email has been sent to {{ order.email }}</p>
+                            
+                            <div class="mt-4">
+                                <a href="{% url 'user:order_detail' order.id %}" class="btn btn-primary">View Order Details</a>
+                                {% if order.invoice %}
+                                    <a href="{% url 'user:download_invoice' order.invoice.id %}" class="btn btn-outline-primary ms-2">Download Invoice</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <a href="{% url 'home:index' %}" class="btn btn-outline-secondary">Back to Home</a>
+                        <a href="{% url 'user:dashboard' %}" class="btn btn-outline-primary ms-2">Go to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

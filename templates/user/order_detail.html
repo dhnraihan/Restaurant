@@ -1,0 +1,115 @@
+<!-- user/templates/user/order_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Order Details - Tasty Restaurant{% endblock %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>Order #{{ order.id }}</h1>
+                <a href="{% url 'user:dashboard' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- Order Items -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="m-0">Order Items</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in order.items.all %}
+                                            <tr>
+                                                <td>{{ item.menu_item.name }}</td>
+                                                <td>${{ item.price }}</td>
+                                                <td>{{ item.quantity }}</td>
+                                                <td>${{ item.subtotal }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3" class="text-end fw-bold">Total:</td>
+                                            <td class="fw-bold">${{ order.total_amount }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Delivery Information -->
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="m-0">Delivery Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Full Name:</strong> {{ order.full_name }}</p>
+                                    <p><strong>Email:</strong> {{ order.email }}</p>
+                                    <p><strong>Phone:</strong> {{ order.phone }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Address:</strong> {{ order.address }}</p>
+                                    {% if order.order_notes %}
+                                        <p><strong>Order Notes:</strong> {{ order.order_notes }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <!-- Order Summary -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="m-0">Order Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Order Date:</strong> {{ order.created_at|date:"F d, Y" }}</p>
+                            <p><strong>Order Status:</strong> 
+                                <span class="badge {% if order.status == 'completed' %}bg-success{% elif order.status == 'processing' %}bg-primary{% elif order.status == 'cancelled' %}bg-danger{% else %}bg-warning{% endif %}">
+                                    {{ order.status|title }}
+                                </span>
+                            </p>
+                            <p><strong>Total Amount:</strong> ${{ order.total_amount }}</p>
+                            
+                            {% if order.invoice %}
+                                <div class="d-grid gap-2">
+                                    <a href="{% url 'user:download_invoice' order.invoice.id %}" class="btn btn-primary">
+                                        <i class="fas fa-file-pdf"></i> Download Invoice
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Order Again -->
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5>Want to order again?</h5>
+                            <a href="{% url 'home:menu' %}" class="btn btn-outline-primary">Browse Menu</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

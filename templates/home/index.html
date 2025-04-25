@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Tasty Restaurant - Home{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4">Welcome to Tasty Restaurant</h1>
+            <p class="lead">Delicious food, friendly service, and unforgettable dining experience</p>
+            <div class="mt-4">
+                <a href="{% url 'home:menu' %}" class="btn btn-primary btn-lg">View Our Menu</a>
+                <a href="{% url 'home:reservation' %}" class="btn btn-outline-dark btn-lg ms-2">Make a Reservation</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Menu Items -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Featured Menu Items</h2>
+            <div class="row">
+                {% for item in featured_items %}
+                    <div class="col-md-4">
+                        <div class="card menu-item-card h-100">
+                            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.name }}</h5>
+                                <p class="card-text text-muted">{{ item.description|truncatechars:100 }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">${{ item.price }}</span>
+                                    <a href="{% url 'home:menu_item_detail' item.slug %}" class="btn btn-sm btn-outline-primary">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12 text-center">
+                        <p>No featured items available at the moment.</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="text-center mt-4">
+                <a href="{% url 'home:menu' %}" class="btn btn-outline-primary">View Full Menu</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Categories -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Our Menu Categories</h2>
+            <div class="row">
+                {% for category in categories %}
+                    <div class="col-md-3">
+                        <div class="card menu-item-card h-100">
+                            {% if category.image %}
+                                <img src="{{ category.image.url }}" class="card-img-top" alt="{{ category.name }}" style="height: 150px; object-fit: cover;">
+                            {% else %}
+                                <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 150px;">
+                                    <h5>{{ category.name }}</h5>
+                                </div>
+                            {% endif %}
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ category.name }}</h5>
+                                <a href="{% url 'home:menu' %}?category={{ category.slug }}" class="btn btn-sm btn-primary">View Items</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12 text-center">
+                        <p>No categories available at the moment.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Us -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2>About Our Restaurant</h2>
+                    <p>Welcome to Tasty Restaurant, where culinary excellence meets warm hospitality. Our restaurant is dedicated to providing an exceptional dining experience through a combination of delicious food, attentive service, and a comfortable atmosphere.</p>
+                    <p>Our chefs use only the freshest ingredients to create mouthwatering dishes that cater to a variety of tastes and preferences. Whether you're joining us for a casual lunch, an intimate dinner, or a special celebration, we strive to make every visit memorable.</p>
+                    <a href="{% url 'home:about' %}" class="btn btn-outline-primary">Learn More</a>
+                </div>
+                <div class="col-md-6">
+                    <img src="/media/restaurant-interior.jpg" alt="Restaurant Interior" class="img-fluid rounded">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Reservation CTA -->
+    <section class="py-5 bg-primary text-white text-center">
+        <div class="container">
+            <h2>Book Your Table Today</h2>
+            <p class="lead">Experience our delicious cuisine and excellent service. Make a reservation now!</p>
+            <a href="{% url 'home:reservation' %}" class="btn btn-light btn-lg mt-3">Make a Reservation</a>
+        </div>
+    </section>
+{% endblock %}
