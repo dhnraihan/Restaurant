@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Restaurant{% endblock %}</title>
+    
+    <!-- Tailwind CSS v4 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff6b6b',
+                        'primary-dark': '#ff5252',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Additional custom styles that might be needed -->
+    <style type="text/tailwindcss">
+        @layer components {
+            .menu-item-card {
+                @apply transition-transform duration-300 mb-5;
+            }
+            
+            .menu-item-card:hover {
+                @apply transform -translate-y-1 shadow-lg;
+            }
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-gray-800 text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap items-center justify-between py-3">
+                <a class="font-bold text-2xl" href="{% url 'home:index' %}">Tasty Restaurant</a>
+                
+                <!-- Mobile toggle button -->
+                <button class="lg:hidden focus:outline-none" id="navbar-toggle">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                
+                <!-- Menu items -->
+                <div class="hidden lg:flex flex-grow lg:flex-grow-0 w-full lg:w-auto lg:flex-row justify-between" id="navbar-content">
+                    <ul class="flex flex-col lg:flex-row lg:mr-auto">
+                        <li>
+                            <a class="block py-2 px-4 lg:py-1 hover:text-primary {% if request.path == '/' %}text-primary{% endif %}" href="{% url 'home:index' %}">Home</a>
+                        </li>
+                        <li>
+                            <a class="block py-2 px-4 lg:py-1 hover:text-primary {% if '/menu/' in request.path %}text-primary{% endif %}" href="{% url 'home:menu' %}">Menu</a>
+                        </li>
+                        <li>
+                            <a class="block py-2 px-4 lg:py-1 hover:text-primary {% if '/about/' in request.path %}text-primary{% endif %}" href="{% url 'home:about' %}">About</a>
+                        </li>
+                        <li>
+                            <a class="block py-2 px-4 lg:py-1 hover:text-primary {% if '/contact/' in request.path %}text-primary{% endif %}" href="{% url 'home:contact' %}">Contact</a>
+                        </li>
+                        <li>
+                            <a class="block py-2 px-4 lg:py-1 hover:text-primary {% if '/reservation/' in request.path %}text-primary{% endif %}" href="{% url 'home:reservation' %}">Reservation</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="flex flex-col lg:flex-row">
+                        {% if user.is_authenticated %}
+                            <li class="relative">
+                                <a class="block py-2 px-4 lg:py-1 hover:text-primary {% if '/user/cart/' in request.path %}text-primary{% endif %}" href="{% url 'user:cart' %}">
+                                    <i class="fas fa-shopping-cart"></i> Cart
+                                    {% if request.session.cart %}
+                                        <span class="inline-flex items-center justify-center rounded-full bg-red-600 text-white text-xs px-2 py-1 ml-1">{{ request.session.cart|length }}</span>
+                                    {% endif %}
+                                </a>
+                            </li>
+                            <li class="relative" x-data="{ open: false }">
+                                <button @click="open = !open" class="flex items-center py-2 px-4 lg:py-1 hover:text-primary">
+                                    {{ user.username }}
+                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                                <div x-show="open" @click.away="open = false" class="absolute right-0 z-10 mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-gray-800">
+                                    <a href="{% url 'user:dashboard' %}" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
+                                    <a href="{% url 'user:profile' %}" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+                                    <div class="border-t border-gray-200"></div>
+                                    <a href="{% url 'user:logout' %}" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a class="block py-2 px-4 lg:py-1 hover:text-primary {% if '/user/login/' in request.path %}text-primary{% endif %}" href="{% url 'user:login' %}">Login</a>
+                            </li>
+                            <li>
+                                <a class="block py-2 px-4 lg:py-1 hover:text-primary {% if '/user/register/' in request.path %}text-primary{% endif %}" href="{% url 'user:register' %}">Register</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Messages -->
+    {% if messages %}
+        <div class="container mx-auto px-4 mt-3">
+            {% for message in messages %}
+                <div class="relative {% if message.tags == 'success' %}
+                bg-green-100 border-green-400 text-green-700
+            {% elif message.tags == 'error' %}
+                bg-red-100 border-red-400 text-red-700
+            {% elif message.tags == 'warning' %}
+                bg-yellow-100 border-yellow-400 text-yellow-700
+            {% else %}
+                bg-blue-100 border-blue-400 text-blue-700
+            {% endif %}
+             px-4 py-3 rounded mb-4" role="alert">
+                    <span class="block sm:inline">{{ message }}</span>
+                    <button type="button" class="absolute top-0 right-0 px-4 py-3" onclick="this.parentElement.remove()">
+                        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <!-- Main Content -->
+    {% block content %}{% endblock %}
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-20 py-10">
+        <div class="container mx-auto px-4 ml-20">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 ">
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Tasty Restaurant</h5>
+                    <p>We serve the best food in town with the finest ingredients and experienced chefs.</p>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Contact</h5>
+                    <p class="mb-1">
+                        <i class="fas fa-map-marker-alt mr-2"></i> 123 juydupor, Gazipur
+                    </p>
+                    <p class="mb-1">
+                        <i class="fas fa-phone mr-2"></i> +0189876543
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope mr-2"></i> me@raihan.xyz
+                    </p>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Follow Us</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-primary"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white hover:text-primary"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white hover:text-primary"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white hover:text-primary"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-8 border-gray-700 mr-[10rem]">
+            <div class="text-center">
+                <p>&copy; {% now "Y" %} Today: {% now "d-m-Y" %} | Tasty Restaurant. All rights reserved.</p>
+                <p>Powered by <a href="https://raihan.xyz" class="text-primary hover:text-primary-dark">Raihan.xyz</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Alpine.js for dropdown functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js"></script>
+    
+    <!-- Mobile menu toggle script -->
+    <script>
+        document.getElementById('navbar-toggle').addEventListener('click', function() {
+            const navbarContent = document.getElementById('navbar-content');
+            navbarContent.classList.toggle('hidden');
+        });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

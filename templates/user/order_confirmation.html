@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Order Confirmation - Tasty Restaurant{% endblock %}
+{% block content %}
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center">
+                <div class="w-full max-w-2xl">
+                    <div class="overflow-hidden rounded-lg shadow-md">
+                        <div class="bg-green-600 px-6 py-4">
+                            <h5 class="m-0 font-medium text-white">Order Confirmed!</h5>
+                        </div>
+                        <div class="bg-white p-8 text-center">
+                            <i class="fas fa-check-circle mb-4 text-6xl text-green-600"></i>
+                            <h3 class="mb-2 text-2xl font-bold">Thank You for Your Order</h3>
+                            <p class="text-lg text-gray-700">Your order has been placed successfully.</p>
+                           
+                            <div class="mt-6 rounded-lg bg-blue-50 p-4 text-blue-800">
+                                <h5 class="text-lg font-medium">Order #{{ order.id }}</h5>
+                                <p>
+                                    Date: {{ order.created_at|date:"F d, Y" }}<br>
+                                    Total: ${{ order.total_amount }}
+                                </p>
+                            </div>
+                           
+                            <p class="mt-4 text-gray-600">A confirmation email has been sent to {{ order.email }}</p>
+                           
+                            <div class="mt-6 space-x-3">
+                                <a href="{% url 'user:order_detail' order.id %}" class="inline-block rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">View Order Details</a>
+                                {% if order.invoice %}
+                                    <a href="{% url 'user:download_invoice' order.invoice.id %}" class="inline-block rounded-md border border-blue-600 bg-white px-4 py-2 font-medium text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Download Invoice</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="mt-6 text-center">
+                        <a href="{% url 'home:index' %}" class="inline-block rounded-md border border-gray-300 bg-white px-4 py-2 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Back to Home</a>
+                        <a href="{% url 'user:dashboard' %}" class="ml-3 inline-block rounded-md border border-blue-600 bg-white px-4 py-2 font-medium text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Go to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

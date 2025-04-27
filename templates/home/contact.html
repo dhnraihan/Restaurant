@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us - Tasty Restaurant{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="bg-gray-100 py-12 text-center bg-cover bg-center" style="background-image: url('/static/img/about-section.jpg');">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold text-white mb-4">Contact Us</h1>
+            <p class="text-lg text-white max-w-3xl mx-auto">We'd love to hear from you. Get in touch with us for reservations, feedback, or inquiries.</p>
+        </div>
+    </section>
+    
+    <section class="py-12 relative overflow-hidden">
+        <!-- Background Image with Blur -->
+        <div class="absolute inset-0 bg-cover bg-center filter blur-sm" style="background-image: url('/static/img/about-section.jpg');"></div>
+    
+        <!-- Main Content with relative positioning -->
+        <div class="relative container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-white/80 p-8 rounded-lg shadow-lg backdrop-blur-sm">
+                <!-- Contact Information -->
+                <div>
+                    <h2 class="text-2xl font-bold mb-6">Get In Touch</h2>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="text-primary mr-3 mt-1">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Address</p>
+                                    <p class="text-gray-700">123 Main Street, Gazipur, Joydebpur, 12345</p>
+                                </div>
+                            </div>
+    
+                            <div class="flex items-start">
+                                <div class="text-primary mr-3 mt-1">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Phone</p>
+                                    <p class="text-gray-700">0181234567</p>
+                                </div>
+                            </div>
+    
+                            <div class="flex items-start">
+                                <div class="text-primary mr-3 mt-1">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Email</p>
+                                    <p class="text-gray-700">hello@raihan.xyz</p>
+                                </div>
+                            </div>
+    
+                            <div class="flex items-start">
+                                <div class="text-primary mr-3 mt-1">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Hours</p>
+                                    <p class="text-gray-700">Monday - Friday: 9:00 AM - 10:00 PM</p>
+                                    <p class="text-gray-700">Saturday - Sunday: 9:00 AM - 11:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">Follow Us</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="bg-primary hover:bg-primary-dark text-white w-10 h-10 rounded-full flex items-center justify-center">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="bg-primary hover:bg-primary-dark text-white w-10 h-10 rounded-full flex items-center justify-center">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="bg-primary hover:bg-primary-dark text-white w-10 h-10 rounded-full flex items-center justify-center">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="bg-primary hover:bg-primary-dark text-white w-10 h-10 rounded-full flex items-center justify-center">
+                                <i class="fab fa-yelp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Contact Form -->
+                <div>
+                    <h2 class="text-2xl font-bold mb-6">Send Us a Message</h2>
+                    <form method="post" action="{% url 'home:contact' %}">
+                        {% csrf_token %}
+                        
+                        {% if form.non_field_errors %}
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                                {% for error in form.non_field_errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.name.id_for_label }}" class="block text-gray-700 font-medium mb-2">Name</label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="text-red-600 mt-1 text-sm">
+                                    {% for error in form.name.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.email.id_for_label }}" class="block text-gray-700 font-medium mb-2">Email</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-red-600 mt-1 text-sm">
+                                    {% for error in form.email.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.subject.id_for_label }}" class="block text-gray-700 font-medium mb-2">Subject</label>
+                            {{ form.subject }}
+                            {% if form.subject.errors %}
+                                <div class="text-red-600 mt-1 text-sm">
+                                    {% for error in form.subject.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.message.id_for_label }}" class="block text-gray-700 font-medium mb-2">Message</label>
+                            {{ form.message }}
+                            {% if form.message.errors %}
+                                <div class="text-red-600 mt-1 text-sm">
+                                    {% for error in form.message.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <button type="submit" class="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+    
+    <!-- Map Section -->
+    <section class="py-8">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-6 text-center">Find Us</h2>
+            <div class="h-96 bg-gray-200 rounded-lg overflow-hidden">
+                <!-- Replace with actual map embed code -->
+                <div class="w-full h-full">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3374.7159108518335!2d90.42493830882411!3d23.999490142387394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755dbcb61b8fff5%3A0x240bf3aefb6ed426!2z4Kaw4Ka-4Kac4Kas4Ka-4Kah4Ka84KeA4KawIOCmruCmvuCmoA!5e0!3m2!1sen!2sbd!4v1745700198541!5m2!1sen!2sbd" 
+                        class="w-full h-full" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="py-12 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+            
+            <div class="max-w-3xl mx-auto space-y-4">
+                <div class="bg-white p-5 rounded-lg shadow-md">
+                    <h3 class="text-lg font-semibold mb-2">Do you take reservations?</h3>
+                    <p class="text-gray-700">Yes, we encourage reservations, especially for dinner and weekends. You can make a reservation online through our website or by calling us directly.</p>
+                </div>
+                
+                <div class="bg-white p-5 rounded-lg shadow-md">
+                    <h3 class="text-lg font-semibold mb-2">Do you offer private dining?</h3>
+                    <p class="text-gray-700">Yes, we have a private dining room available for special events and gatherings. Please contact us for availability and details.</p>
+                </div>
+                
+                <div class="bg-white p-5 rounded-lg shadow-md">
+                    <h3 class="text-lg font-semibold mb-2">Do you accommodate dietary restrictions?</h3>
+                    <p class="text-gray-700">Absolutely! We offer vegetarian, vegan, and gluten-free options. Please inform your server about any allergies or dietary restrictions, and we'll do our best to accommodate your needs.</p>
+                </div>
+                
+                <div class="bg-white p-5 rounded-lg shadow-md">
+                    <h3 class="text-lg font-semibold mb-2">Is parking available?</h3>
+                    <p class="text-gray-700">Yes, we have a dedicated parking lot behind the restaurant. Valet parking is also available during dinner hours on weekends.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
