@@ -11,13 +11,6 @@ def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
-# @receiver(post_save, sender=Order)
-# def create_invoice(sender, instance, created, **kwargs):
-#     """Create an Invoice for every new Order"""
-#     if created:
-#         # Generate a random invoice number
-#         invoice_number = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
-#         Invoice.objects.create(order=instance, invoice_number=invoice_number)
 
 def create_or_update_invoice(sender, instance, created, **kwargs):
     # Check if the Order instance was just created

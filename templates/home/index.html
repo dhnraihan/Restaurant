@@ -4,16 +4,18 @@
 
 {% block content %}
     <!-- Hero Section -->
-    <section class="bg-gray-100 py-20 text-center">
+    <section class="bg-gray-100 py-20 text-center bg-cover bg-center" style="background-image: url('/static/img/main-section.jpg');">
         <div class="container mx-auto px-4">
-            <h1 class="text-4xl md:text-5xl font-bold mb-3">Welcome to Tasty Restaurant</h1>
-            <p class="text-lg md:text-xl text-gray-700 mb-6">Delicious food, friendly service, and unforgettable dining experience</p>
+            <h1 class="text-4xl md:text-5xl font-bold mb-3 text-white">Welcome to Tasty Restaurant</h1>
+            <p class="text-lg md:text-xl text-gray-200 mb-6">Delicious food, friendly service, and unforgettable dining experience</p>
+            <p class="text-xl text-white mb-8">বাংলাদেশী ঐতিহ্যবাহী খাবারের স্বাদ নিন</p>
             <div class="mt-4">
                 <a href="{% url 'home:menu' %}" class="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-6 rounded-lg text-lg inline-block">View Our Menu</a>
-                <a href="{% url 'home:reservation' %}" class="border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white font-bold py-2 px-6 rounded-lg text-lg inline-block ml-2">Make a Reservation</a>
+                <a href="{% url 'home:reservation' %}" class="border border-white text-white hover:bg-white hover:text-gray-800 font-bold py-2 px-6 rounded-lg text-lg inline-block ml-2">Make a Reservation</a>
             </div>
         </div>
     </section>
+
     
     <!-- Featured Menu Items -->
     <section class="py-12">
@@ -72,29 +74,50 @@
         </div>
     </section>
     
-    <!-- About Us -->
-    <section class="py-12">
+    <!-- About Section -->
+    <section class="py-5 bg-gray-50">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div>
-                    <h2 class="text-3xl font-bold mb-4">About Our Restaurant</h2>
-                    <p class="mb-4">Welcome to Tasty Restaurant, where culinary excellence meets warm hospitality. Our restaurant is dedicated to providing an exceptional dining experience through a combination of delicious food, attentive service, and a comfortable atmosphere.</p>
-                    <p class="mb-6">Our chefs use only the freshest ingredients to create mouthwatering dishes that cater to a variety of tastes and preferences. Whether you're joining us for a casual lunch, an intimate dinner, or a special celebration, we strive to make every visit memorable.</p>
-                    <a href="{% url 'home:about' %}" class="border border-primary text-primary hover:bg-primary hover:text-white font-medium py-2 px-6 rounded inline-block">Learn More</a>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                
+                <!-- Text Content -->
+                <div class="space-y-6">
+                    <h2 class="text-4xl font-extrabold text-gray-800 leading-tight">About <span class="text-primary">Our Restaurant</span></h2>
+                    
+                    <p class="text-gray-600 text-lg">
+                        Welcome to <strong>Tasty Restaurant</strong>, where culinary excellence meets warm hospitality. Our goal is to deliver an exceptional dining experience with delicious food, attentive service, and a cozy atmosphere.
+                    </p>
+    
+                    <p class="text-gray-600 text-lg">
+                        We use only the freshest ingredients to craft mouthwatering dishes that cater to every taste. Whether it's a casual lunch, romantic dinner, or a grand celebration — every visit is made memorable.
+                    </p>
+    
+                    <a href="{% url 'home:about' %}" class="inline-block bg-primary text-white hover:bg-primary-dark font-semibold py-3 px-8 rounded-lg transition duration-300">
+                        Learn More
+                    </a>
                 </div>
-                <div>
-                    <img src="/media/restaurant-interior.jpg" alt="Restaurant Interior" class="w-full rounded">
+    
+                <!-- Image -->
+                <div class="relative">
+                    <img src="/static/img/about.jpg" alt="Restaurant Interior" class="w-full rounded-xl shadow-lg transform hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-primary text-white text-xs uppercase px-3 py-1 rounded-full shadow-md">
+                        Since 2020
+                    </div>
                 </div>
+    
             </div>
         </div>
     </section>
     
+    
     <!-- Reservation CTA -->
-    <section class="py-12 bg-primary text-white text-center">
+    <section class="py-12 bg-primary text-white text-center bg-center bg-cover" style="background-image: url('/static/img/testie.jpg');">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-3">Book Your Table Today</h2>
-            <p class="text-xl mb-6">Experience our delicious cuisine and excellent service. Make a reservation now!</p>
-            <a href="{% url 'home:reservation' %}" class="bg-white text-primary hover:bg-gray-200 font-bold py-2 px-6 rounded-lg text-lg inline-block">Make a Reservation</a>
+            <h2 class="text-3xl font-bold mb-4">Book Your Table Today</h2>
+            <p class="text-xl mb-6 max-w-2xl mx-auto">Experience our delicious cuisine and excellent service. Make a reservation now!</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="{% url 'home:reservation' %}" class="bg-white text-primary hover:bg-gray-100 font-bold py-2 px-6 rounded-lg text-lg">Make a Reservation</a>
+                <a href="{% url 'home:contact' %}" class="border border-white text-white hover:bg-white hover:text-primary font-bold py-2 px-6 rounded-lg text-lg">Make a Reservation</a>
+            </div>
         </div>
     </section>
 {% endblock %}

@@ -22,8 +22,6 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # Create user profile
-            Profile.objects.create(user=user)
             login(request, user)
             messages.success(request, 'Your account has been created successfully!')
             return redirect('user:dashboard')

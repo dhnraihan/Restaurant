@@ -4,25 +4,35 @@
 
 {% block content %}
     <!-- Hero Section -->
-    <section class="bg-gray-100 py-12">
+    <section class="bg-gray-100 py-12 text-center bg-cover bg-center" style="background-image: url('/static/img/about-section.jpg');">
         <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl font-bold mb-4">About Tasty Restaurant</h1>
-            <p class="text-lg text-gray-700 max-w-3xl mx-auto">Delivering exceptional culinary experiences since 2010</p>
+            <h1 class="text-4xl font-bold text-white mb-4">About Tasty Restaurant</h1>
+            <p class="text-lg text-white max-w-3xl mx-auto">Delivering exceptional culinary experiences since 2010</p>
         </div>
     </section>
     
     <!-- Our Story -->
-    <section class="py-12">
+    <section class="py-5 bg-gray-50">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div>
-                    <h2 class="text-3xl font-bold mb-6">Our Story</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                
+                <!-- Text Content -->
+                <div class="space-y-6">
+                    <h2 class="text-4xl font-extrabold text-gray-800 leading-tight">Our Story <span class="text-primary">Our Restaurant</span></h2>
+                    <p class="text-gray-600 text-lg">
+                        Welcome to <strong>Tasty Restaurant</strong>, where culinary excellence meets warm hospitality. Our goal is to deliver an exceptional dining experience with delicious food, attentive service, and a cozy atmosphere.
+                    </p>
                     <p class="mb-4 text-gray-700">Tasty Restaurant began as a small family-owned establishment with a passion for bringing authentic, high-quality cuisine to our community. Founded by Chef Michael Thompson in 2010, our restaurant has grown from a cozy café to a beloved dining destination.</p>
                     <p class="mb-4 text-gray-700">Our journey has been defined by our commitment to culinary excellence, exceptional service, and creating memorable dining experiences. Over the years, we've expanded our menu to include diverse offerings while maintaining our dedication to using fresh, locally-sourced ingredients.</p>
-                    <p class="text-gray-700">Today, Tasty Restaurant continues to be guided by the same principles that inspired its creation: a love for food, respect for ingredients, and a desire to bring people together through exceptional dining experiences.</p>
+                    <p class="text-gray-700">Today, Tasty Restaurant continues to be guided by the same principles that inspired its creation: a love for food, respect for ingredients, and a desire to bring people together through exceptional dining experiences.</p>  
                 </div>
-                <div>
-                    <img src="/media/restaurant-story.jpg" alt="Restaurant Story" class="w-full rounded-lg shadow-md">
+    
+                <!-- Image -->
+                <div class="relative">
+                    <img src="/static/img/about.jpg" alt="Restaurant Interior" class="w-full rounded-xl shadow-lg transform hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-primary text-white text-xs uppercase px-3 py-1 rounded-full shadow-md">
+                        Since 2020
+                    </div>
                 </div>
             </div>
         </div>
@@ -66,9 +76,9 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <!-- Chef -->
                 <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
-                    <img src="/media/chef.jpg" alt="Chef Michael Thompson" class="w-full h-64 object-cover">
+                    <img src="/static/img/mona.webp" alt="Chef Michael Thompson" class="w-full h-64 object-cover">
                     <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-1">Michael Thompson</h3>
+                        <h3 class="text-xl font-semibold mb-1">Raihan</h3>
                         <p class="text-primary font-medium mb-2">Executive Chef</p>
                         <p class="text-gray-700 text-sm">Chef Michael brings over 20 years of culinary expertise from around the world.</p>
                     </div>
@@ -76,9 +86,9 @@
                 
                 <!-- Sous Chef -->
                 <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
-                    <img src="/media/sous-chef.jpg" alt="Sous Chef Emma Rodriguez" class="w-full h-64 object-cover">
+                    <img src="/static/img/mona.webp" alt="Sous Chef Emma Rodriguez" class="w-full h-64 object-cover">
                     <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-1">Emma Rodriguez</h3>
+                        <h3 class="text-xl font-semibold mb-1">Faisal</h3>
                         <p class="text-primary font-medium mb-2">Sous Chef</p>
                         <p class="text-gray-700 text-sm">Emma specializes in innovative flavor combinations and modern techniques.</p>
                     </div>
@@ -86,9 +96,9 @@
                 
                 <!-- Restaurant Manager -->
                 <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
-                    <img src="/media/manager.jpg" alt="Manager James Wilson" class="w-full h-64 object-cover">
+                    <img src="/static/img/mona.webp" alt="Manager James Wilson" class="w-full h-64 object-cover">
                     <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-1">James Wilson</h3>
+                        <h3 class="text-xl font-semibold mb-1">Fahad</h3>
                         <p class="text-primary font-medium mb-2">Restaurant Manager</p>
                         <p class="text-gray-700 text-sm">James ensures every guest experiences exceptional service and hospitality.</p>
                     </div>
@@ -96,9 +106,9 @@
                 
                 <!-- Pastry Chef -->
                 <div class="bg-white rounded-lg shadow-md overflow-hidden text-center">
-                    <img src="/media/pastry-chef.jpg" alt="Pastry Chef Sarah Kim" class="w-full h-64 object-cover">
+                    <img src="/static/img/mona.webp" alt="Pastry Chef Sarah Kim" class="w-full h-64 object-cover">
                     <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-1">Sarah Kim</h3>
+                        <h3 class="text-xl font-semibold mb-1">Sarah</h3>
                         <p class="text-primary font-medium mb-2">Pastry Chef</p>
                         <p class="text-gray-700 text-sm">Sarah creates delectable desserts that provide the perfect finish to any meal.</p>
                     </div>
@@ -112,8 +122,9 @@
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-8">What Our Customers Say</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <div class="text-yellow-400 mb-4">
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
+                    <img src="/static/img/happy.jpg" alt="Jennifer L." class="w-16 h-16 rounded-full mb-4 object-cover">
+                    <div class="text-yellow-400 mb-3">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -124,8 +135,9 @@
                     <div class="font-semibold">- Jennifer L.</div>
                 </div>
                 
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <div class="text-yellow-400 mb-4">
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
+                    <img src="/static/img/happy.jpg" alt="Robert M." class="w-16 h-16 rounded-full mb-4 object-cover">
+                    <div class="text-yellow-400 mb-3">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -136,8 +148,9 @@
                     <div class="font-semibold">- Robert M.</div>
                 </div>
                 
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <div class="text-yellow-400 mb-4">
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
+                    <img src="/static/img/happy.jpg" alt="David W." class="w-16 h-16 rounded-full mb-4 object-cover">
+                    <div class="text-yellow-400 mb-3">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -147,12 +160,13 @@
                     <p class="italic text-gray-700 mb-4">"I hosted my birthday dinner here and it was perfect. The staff went above and beyond to make the event special. The food was outstanding and everyone had a great time."</p>
                     <div class="font-semibold">- David W.</div>
                 </div>
+                
             </div>
         </div>
     </section>
     
     <!-- Visit Us CTA -->
-    <section class="py-12 bg-primary text-white text-center">
+    <section class="py-12 bg-primary text-white text-center bg-center bg-cover" style="background-image: url('/static/img/testie.jpg');">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold mb-4">Come Experience Tasty Restaurant</h2>
             <p class="text-xl mb-6 max-w-2xl mx-auto">We'd love to welcome you to our restaurant. Make a reservation today and experience our exceptional cuisine and hospitality.</p>
