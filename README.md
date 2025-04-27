@@ -76,7 +76,7 @@ A complete restaurant management system built with Django, featuring online orde
 1. **Clone the repository**
    ```bash
    git clone https://github.com/dhnraihan/Restaurant.git
-   cd restaurant-management
+   cd Restaurant
    ```
 
 2. **Create and activate virtual environment**
