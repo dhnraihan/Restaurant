@@ -2,7 +2,7 @@
 
 A complete restaurant management system built with Django, featuring online ordering, menu management, user profiles, reservations, and invoice generation.
 
-![Restaurant Management System](https://via.placeholder.com/800x400)
+![Restaurant Management System](demo.gif)
 
 ---
 
