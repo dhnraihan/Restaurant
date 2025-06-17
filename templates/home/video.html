@@ -1,0 +1,43 @@
+<!-- templates/video/video.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video Upload</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
+        <h1 class="text-2xl font-bold mb-6">🎬 Upload a Video</h1>
+        
+        
+
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+
+            <div>
+                <label class="block font-medium">Video File</label>
+                {{ form.video_file }}
+            </div>
+
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Upload</button>
+        </form>
+
+        <h2 class="text-xl font-semibold mt-10 mb-4">📁 Uploaded Videos</h2>
+        <div class="space-y-4">
+            {% for video in videos %}
+                <div class="p-4 border rounded bg-gray-50">
+                    <h3 class="text-lg font-bold">{{ video.title }}</h3>
+                    <video class="mt-2 w-full" controls>
+                        <source src="{{ video.video_file.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p class="text-sm text-gray-500 mt-1">Uploaded at: {{ video.uploaded_at }}</p>
+                </div>
+            {% empty %}
+                <p class="text-gray-600">No videos uploaded yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

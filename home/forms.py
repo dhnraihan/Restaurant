@@ -1,6 +1,23 @@
 from django import forms
 from .models import Reservation
 
+# after delete me
+from .models import Video
+
+class VideoForm(forms.ModelForm):
+    class Meta:
+        model = Video
+        fields = ['video_file']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'w-full p-2 border rounded'
+            }),
+            'video_file': forms.ClearableFileInput(attrs={
+                'class': 'w-full p-2 border rounded'
+            }),
+        }
+
+
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation

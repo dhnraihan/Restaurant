@@ -51,3 +51,11 @@ class Reservation(models.Model):
     
     def __str__(self):
         return f"Reservation for {self.name} on {self.date} at {self.time}"
+
+#after delete me
+class Video(models.Model):
+    video_file = models.FileField(upload_to='videos/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title

@@ -3,6 +3,25 @@ from django.contrib import messages
 from .models import Category, MenuItem, Reservation
 from .forms import ReservationForm, ContactForm
 
+#after delete me
+from .forms import VideoForm
+from .models import Video
+
+def upload_video(request):
+    if request.method == 'POST':
+        form = VideoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    else:
+        form = VideoForm()
+
+    videos = Video.objects.all().order_by('-uploaded_at')
+    return render(request, 'home/video.html', {'form': form, 'videos': videos})
+
+
+
+
+
 def index(request):
     featured_items = MenuItem.objects.filter(is_featured=True, is_available=True)[:6]
     categories = Category.objects.all()[:4]
