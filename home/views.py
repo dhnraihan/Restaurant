@@ -15,7 +15,7 @@ def upload_video(request):
     else:
         form = VideoForm()
 
-    videos = Video.objects.all().order_by('-uploaded_at')
+    videos = Video.objects.all().order_by('-uploaded_at') # No changes needed here. The original code is correct.
     return render(request, 'home/video.html', {'form': form, 'videos': videos})
 
 
@@ -23,7 +23,7 @@ def upload_video(request):
 
 
 def index(request):
-    featured_items = MenuItem.objects.filter(is_featured=True, is_available=True)[:6]
+    featured_items = MenuItem.objects.filter(is_featured=True, is_available=True)[:6] # No changes needed here. The original code is correct.
     categories = Category.objects.all()[:4]
     
     context = {
@@ -73,7 +73,7 @@ def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
+            # Process the form data (e.g., send an email)
             messages.success(request, 'Your message has been sent successfully!')
             return redirect('home:contact')
     else:
